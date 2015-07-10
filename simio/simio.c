@@ -31,6 +31,7 @@
 #include "simio_hwmult.h"
 #include "simio_gpio.h"
 #include "simio_console.h"
+#include "simio_spi.h"
 
 static const struct simio_class *const class_db[] = {
 	&simio_tracer,
@@ -38,7 +39,8 @@ static const struct simio_class *const class_db[] = {
 	&simio_wdt,
 	&simio_hwmult,
 	&simio_gpio,
-	&simio_console
+	&simio_console,
+	&simio_spi
 };
 
 /* Simulator data. We keep a list of devices on the bus, and the special

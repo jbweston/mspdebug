@@ -19,7 +19,7 @@
 CC ?= gcc
 INSTALL = /usr/bin/install
 PREFIX ?= /usr/local
-LDFLAGS ?= -s
+LDFLAGS ?= 
 
 BINDIR = ${PREFIX}/bin/
 MANDIR = ${PREFIX}/share/man/man1
@@ -78,12 +78,14 @@ else
     endif
 endif
 
+ZMQ_LIBS = -lzmq -lczmq
+
 INCLUDES = -I. -Isimio -Iformats -Itransport -Idrivers -Iutil -Iui
 GCC_CFLAGS = -O1 -Wall -Wno-char-subscripts -ggdb
 CONFIG_CFLAGS = -DLIB_DIR=\"$(LIBDIR)\"
 
 MSPDEBUG_LDFLAGS = $(LDFLAGS) $(PORTS_LDFLAGS)
-MSPDEBUG_LIBS = -lusb $(READLINE_LIBS) $(OS_LIBS)
+MSPDEBUG_LIBS = -lusb $(READLINE_LIBS) $(OS_LIBS) $(ZMQ_LIBS)
 MSPDEBUG_CFLAGS = $(CFLAGS) $(READLINE_CFLAGS) $(PORTS_CFLAGS)\
  $(GCC_CFLAGS) $(INCLUDES) $(CONFIG_CFLAGS) $(OS_CFLAGS)
 
@@ -186,6 +188,7 @@ OBJ=\
     simio/simio_hwmult.o \
     simio/simio_gpio.o \
     simio/simio_console.o \
+    simio/simio_spi.o \
     ui/gdb.o \
     ui/rtools.o \
     ui/sym.o \
