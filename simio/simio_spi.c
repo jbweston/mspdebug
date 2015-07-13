@@ -90,6 +90,15 @@ static void spi_reset(struct simio_device *dev)
   simio_sfr_modify(SIMIO_IFG2, 1 << g->interrupt_bit, 0) ;
   g->rx_reg = 0x00 ;
   g->last_op = READ ;
+  char* last_endpoint = zsock_last_endpoint(g->sock) ;
+  // last_endpoint may be deallocated when socket is destroyed
+  size_t len = strlen(last_endpoint) + 1;  // must include null termination
+  char* endpoint = malloc(len) ;
+  strncpy(endpoint, last_endpoint, len) ;
+  zsock_destroy(&g->sock) ;
+	g->sock = zsock_new_req(endpoint);
+  assert(g->sock) ;
+  free(endpoint) ;
 }
 
 static int config_addr(address_t *addr, char **arg_text)
