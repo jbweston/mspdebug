@@ -71,6 +71,7 @@ static struct simio_device *spi_create(char **arg_text)
 	g->rx_addr = 0x006E ;
 	g->tx_addr = 0x006F ;
   g->rx_reg = 0x00 ;
+  zsys_handler_set (NULL);  // CZMQ should not set its own signal handlers
 	g->sock = zsock_new_req("ipc:///tmp/simio_UCB0.sock");
   assert(g->sock);
 
